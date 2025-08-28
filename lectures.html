@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lecture Videos & Notes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="lectures.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-graduation-cap"></i>
+      <span>SEMS</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="evaluation.html">Evaluation</a></li>
+      <li><a href="lectures.html" class="active">Lectures</a></li>
+      <li><a href="help.html">Help</a></li>
+      <li><a href="login.html" id="loginLink">Login</a></li>
+    </ul>
+    <div class="hamburger">
+      <i class="fas fa-bars"></i>
+    </div>
+  </nav>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <button id="themeButton"><i class="fas fa-moon"></i></button>
+  </div>
+
+  <!-- Container -->
+  <div class="container">
+    <h1 class="page-title">Lecture Videos & Learning Materials</h1>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for videos, notes, or assignments...">
+      <i class="fas fa-search"></i>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <div class="filter-group">
+        <label for="semester">Semester</label>
+        <select id="semester">
+          <option value="all">All Semesters</option>
+          <option value="1">Semester 1</option>
+          <option value="2">Semester 2</option>
+          <option value="3">Semester 3</option>
+          <option value="4">Semester 4</option>
+          <option value="5">Semester 5</option>
+          <option value="6">Semester 6</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="subject">Subject</label>
+        <select id="subject">
+          <option value="all">All Subjects</option>
+          <option value="math">Mathematics</option>
+          <option value="physics">Physics</option>
+          <option value="chemistry">Chemistry</option>
+          <option value="programming">Programming</option>
+          <option value="english">English</option>
+          <option value="history">History</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="type">Content Type</label>
+        <select id="type">
+          <option value="all">All Types</option>
+          <option value="video">Videos</option>
+          <option value="notes">Notes</option>
+          <option value="assignment">Assignments</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Video List -->
+    <h2>Featured Videos</h2>
+    <div class="video-list" id="videoList">
+      <!-- Video Card 1 -->
+      <div class="video-card" data-semester="1" data-subject="math" data-type="video">
+        <div class="video-thumbnail">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <h3>Introduction to Calculus</h3>
+          <p>Learn the basics of differential calculus with practical examples and applications in real-world scenarios.</p>
+          <div class="video-meta">
+            <span><i class="far fa-clock"></i> 45:18</span>
+            <span><i class="far fa-calendar"></i> Oct 12, 2023</span>
+          </div>
+          <div class="video-actions">
+            <button class="btn btn-primary"><i class="fas fa-play"></i> Watch</button>
+            <button class="btn btn-outline"><i class="fas fa-download"></i> Notes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Card 2 -->
+      <div class="video-card" data-semester="2" data-subject="physics" data-type="video">
+        <div class="video-thumbnail">
+          <iframe src="https://www.youtube.com/embed/3tmd-ClpJxA" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <h3>Quantum Mechanics Fundamentals</h3>
+          <p>Understanding the basic principles of quantum mechanics and its implications in modern physics.</p>
+          <div class="video-meta">
+            <span><i class="far fa-clock"></i> 52:47</span>
+            <span><i class="far fa-calendar"></i> Nov 5, 2023</span>
+          </div>
+          <div class="video-actions">
+            <button class="btn btn-primary"><i class="fas fa-play"></i> Watch</button>
+            <button class="btn btn-outline"><i class="fas fa-download"></i> Notes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Card 3 -->
+      <div class="video-card" data-semester="3" data-subject="programming" data-type="video">
+        <div class="video-thumbnail">
+          <iframe src="https://www.youtube.com/embed/8mAITcNt710" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <h3>Data Structures & Algorithms</h3>
+          <p>Comprehensive guide to essential data structures and algorithms every programmer should know.</p>
+          <div class="video-meta">
+            <span><i class="far fa-clock"></i> 38:22</span>
+            <span><i class="far fa-calendar"></i> Sep 28, 2023</span>
+          </div>
+          <div class="video-actions">
+            <button class="btn btn-primary"><i class="fas fa-play"></i> Watch</button>
+            <button class="btn btn-outline"><i class="fas fa-download"></i> Notes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Card 4 -->
+      <div class="video-card" data-semester="4" data-subject="chemistry" data-type="video">
+        <div class="video-thumbnail">
+          <iframe src="https://www.youtube.com/embed/LQ6F9noBq-I" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <h3>Organic Chemistry Reactions</h3>
+          <p>Detailed explanation of key organic chemistry reactions with mechanisms and examples.</p>
+          <div class="video-meta">
+            <span><i class="far fa-clock"></i> 41:05</span>
+            <span><i class="far fa-calendar"></i> Oct 17, 2023</span>
+          </div>
+          <div class="video-actions">
+            <button class="btn btn-primary"><i class="fas fa-play"></i> Watch</button>
+            <button class="btn btn-outline"><i class="fas fa-download"></i> Notes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="notes-section">
+      <h2>Study Notes & Materials</h2>
+      <div class="notes-grid" id="notesGrid">
+        <!-- Note 1 -->
+        <div class="note-card" data-semester="1" data-subject="math" data-type="notes">
+          <h4>Calculus Formulas</h4>
+          <p>Complete collection of differentiation and integration formulas with examples.</p>
+          <button class="btn btn-primary"><i class="fas fa-download"></i> Download PDF</button>
+        </div>
+
+        <!-- Note 2 -->
+        <div class="note-card" data-semester="2" data-subject="physics" data-type="notes">
+          <h4>Quantum Mechanics Cheat Sheet</h4>
+          <p>Quick reference for important formulas and concepts in quantum mechanics.</p>
+          <button class="btn btn-primary"><i class="fas fa-download"></i> Download PDF</button>
+        </div>
+
+        <!-- Note 3 -->
+        <div class="note-card" data-semester="3" data-subject="programming" data-type="notes">
+          <h4>Algorithms Reference</h4>
+          <p>Time complexity and implementation details for common algorithms.</p>
+          <button class="btn btn-primary"><i class="fas fa-download"></i> Download PDF</button>
+        </div>
+
+        <!-- Note 4 -->
+        <div class="note-card" data-semester="4" data-subject="chemistry" data-type="notes">
+          <h4>Organic Chemistry Mechanisms</h4>
+          <p>Step-by-step guide to important organic chemistry reaction mechanisms.</p>
+          <button class="btn btn-primary"><i class="fas fa-download"></i> Download PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assignments Section -->
+    <div class="assignments-section">
+      <h2>Assignments</h2>
+      <div class="assignment-list" id="assignmentList">
+        <!-- Assignment 1 -->
+        <div class="assignment-item" data-semester="1" data-subject="math" data-type="assignment">
+          <div class="assignment-info">
+            <h4>Calculus Problem Set #3</h4>
+            <p>Differential equations and applications</p>
+          </div>
+          <div>
+            <span class="assignment-due">Due: Nov 15, 2023</span>
+            <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+          </div>
+        </div>
+
+        <!-- Assignment 2 -->
+        <div class="assignment-item" data-semester="2" data-subject="physics" data-type="assignment">
+          <div class="assignment-info">
+            <h4>Quantum Mechanics Homework</h4>
+            <p>Wave functions and probability</p>
+          </div>
+          <div>
+            <span class="assignment-due">Due: Nov 18, 2023</span>
+            <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+          </div>
+        </div>
+
+        <!-- Assignment 3 -->
+        <div class="assignment-item" data-semester="3" data-subject="programming" data-type="assignment">
+          <div class="assignment-info">
+            <h4>Data Structures Project</h4>
+            <p>Implementing and analyzing sorting algorithms</p>
+          </div>
+          <div>
+            <span class="assignment-due">Due: Nov 22, 2023</span>
+            <button class="btn btn-outline"><i class="fas fa-download"></i> Download</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="lectures.js"></script>
+</body>
+</html>

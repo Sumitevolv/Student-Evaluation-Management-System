@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Performance Evaluation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --success: #4cc9f0;
+      --warning: #f72585;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --card-bg: #ffffff;
+      --text-color: #212529;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    .dark-mode {
+      --primary: #4cc9f0;
+      --secondary: #4895ef;
+      --success: #3a0ca3;
+      --warning: #f72585;
+      --light: #121212;
+      --dark: #f8f9fa;
+      --gray: #adb5bd;
+      --light-gray: #2d2d2d;
+      --card-bg: #1e1e1e;
+      --text-color: #e9ecef;
+      --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Navbar Styles */
+    nav {
+      background-color: var(--primary);
+      padding: 1rem 0;
+      box-shadow: var(--box-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin: 0 1rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 0.5rem 0.8rem;
+      border-radius: var(--border-radius);
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Header */
+    .page-header {
+      text-align: center;
+      margin: 2rem 0;
+      animation: fadeIn 1s ease;
+    }
+
+    .page-header h1 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .page-header p {
+      color: var(--gray);
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      margin-bottom: 2rem;
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+    }
+
+    .tab-btn {
+      padding: 1.2rem 1.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gray);
+      position: relative;
+      transition: var(--transition);
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      background-color: rgba(67, 97, 238, 0.1);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Form Styles */
+    .evaluation-form {
+      background-color: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+    }
+
+    .evaluation-form h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--light-gray);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--light-gray);
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      transition: var(--transition);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(67, 97, 238, 0.4);
+    }
+
+    /* Result Card */
+    .result-card {
+      background-color: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+      display: none;
+      animation: slideUp 0.5s ease;
+    }
+
+    .result-card h2 {
+      color: var(--primary);
+      margin-bottom: 1.8rem;
+      text-align: center;
+      font-size: 1.8rem;
+    }
+
+    .grade-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .grade-item {
+      text-align: center;
+      padding: 1.8rem 1rem;
+      border-radius: var(--border-radius);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    .grade-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .grade-item h3 {
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .grade-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .performance-feedback {
+      margin-top: 2.5rem;
+    }
+
+    .performance-feedback h3 {
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      font-size: 1.4rem;
+    }
+
+    .feedback-item {
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      border-radius: var(--border-radius);
+      background-color: var(--light-gray);
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .feedback-item:hover {
+      transform: translateX(5px);
+    }
+
+    .feedback-item i {
+      margin-right: 1rem;
+      font-size: 1.8rem;
+    }
+
+    .feedback-good {
+      border-left: 5px solid var(--success);
+    }
+
+    .feedback-warning {
+      border-left: 5px solid var(--warning);
+    }
+
+    /* Charts */
+    .charts-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .chart-card {
+      background-color: var(--card-bg);
+      padding: 1.8rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    .chart-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .chart-card h3 {
+      margin-bottom: 1.2rem;
+      color: var(--primary);
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    /* Attendance */
+    .attendance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+    }
+
+    .attendance-day {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: var(--light-gray);
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 600;
+    }
+
+    .attendance-day.present {
+      background: linear-gradient(135deg, var(--success), #3a0ca3);
+      color: white;
+      box-shadow: 0 4px 8px rgba(76, 201, 240, 0.3);
+    }
+
+    .attendance-day.absent {
+      background: linear-gradient(135deg, var(--warning), #b5179e);
+      color: white;
+      box-shadow: 0 4px 8px rgba(247, 37, 133, 0.3);
+    }
+
+    /* Comparison */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+
+    .comparison-table th, .comparison-table td {
+      padding: 1.2rem;
+      text-align: left;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .comparison-table th {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .pulse {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.7);
+      }
+      70% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 10px rgba(67, 97, 238, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+      }
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      box-shadow: var(--box-shadow);
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      transform: rotate(30deg) scale(1.1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 968px) {
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .nav-links li {
+        margin: 0.5rem;
+      }
+      
+      .tabs {
+        flex-wrap: wrap;
+      }
+      
+      .tab-btn {
+        padding: 1rem;
+      }
+      
+      .grade-summary {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .evaluation-form {
+        padding: 1.5rem;
+      }
+      
+      .theme-toggle {
+        bottom: 1rem;
+        right: 1rem;
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="navbar">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>SEMS</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="evaluation.html" class="active">Evaluation</a></li>
+        <li><a href="lectures.html">Lecture Videos</a></li>
+        <li><a href="help.html">Help</a></li>
+        <li><a href="login.html" id="loginLink" class="disabled-link">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Student Performance Evaluation</h1>
+      <p>Track your academic progress, identify areas for improvement, and set goals for success</p>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="grades">
+        <i class="fas fa-chart-line"></i> Grades
+      </button>
+      <button class="tab-btn" data-tab="attendance">
+        <i class="fas fa-calendar-check"></i> Attendance
+      </button>
+      <button class="tab-btn" data-tab="comparison">
+        <i class="fas fa-compare"></i> Comparison
+      </button>
+      <button class="tab-btn" data-tab="history">
+        <i class="fas fa-history"></i> History
+      </button>
+    </div>
+
+    <!-- Grades Tab -->
+    <div class="tab-content active" id="grades-tab">
+      <div class="evaluation-form">
+        <h2>Enter Student Marks</h2>
+        <form id="evaluation-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name"><i class="fas fa-user"></i> Student Name:</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="semester"><i class="fas fa-book"></i> Semester:</label>
+              <select id="semester" name="semester" required>
+                <option value="">Select Semester</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="math"><i class="fas fa-calculator"></i> Math Score:</label>
+              <input type="number" id="math" name="math" min="0" max="100" required>
+            </div>
+
+            <div class="form-group">
+              <label for="science"><i class="fas fa-flask"></i> Science Score:</label>
+              <input type="number" id="science" name="science" min="0" max="100" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="english"><i class="fas fa-language"></i> English Score:</label>
+              <input type="number" id="english" name="english" min="0" max="100" required>
+            </div>
+
+            <div class="form-group">
+              <label for="history"><i class="fas fa-monument"></i> History Score:</label>
+              <input type="number" id="history" name="history" min="0" max="100" required>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary" onclick="evaluatePerformance()">
+            <i class="fas fa-calculator"></i> Evaluate Performance
+          </button>
+        </form>
+      </div>
+
+      <div id="result" class="result-card">
+        <h2>Performance Summary</h2>
+        
+        <div class="grade-summary">
+          <div class="grade-item">
+            <h3>Overall Percentage</h3>
+            <div class="grade-value" id="overall-percentage">0%</div>
+          </div>
+          <div class="grade-item">
+            <h3>Grade</h3>
+            <div class="grade-value" id="overall-grade">F</div>
+          </div>
+          <div class="grade-item">
+            <h3>Rank</h3>
+            <div class="grade-value" id="student-rank">-</div>
+          </div>
+        </div>
+
+        <div class="performance-feedback">
+          <h3>Performance Insights</h3>
+          <div class="feedback-item feedback-good">
+            <i class="fas fa-check-circle"></i>
+            <div>
+              <strong>Strengths:</strong>
+              <p id="strengths">No data available</p>
+            </div>
+          </div>
+          <div class="feedback-item feedback-warning">
+            <i class="fas fa-exclamation-circle"></i>
+            <div>
+              <strong>Areas for Improvement:</strong>
+              <p id="improvements">No data available</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="charts-container">
+        <div class="chart-card">
+          <h3>Subject-wise Performance</h3>
+          <canvas id="subjectChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Grade Distribution</h3>
+          <canvas id="gradeChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other tabs remain the same but with updated styling -->
+    <!-- Attendance Tab -->
+    <div class="tab-content" id="attendance-tab">
+      <div class="evaluation-form">
+        <h2>Attendance Tracker</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="attendance-student"><i class="fas fa-user"></i> Student Name:</label>
+            <input type="text" id="attendance-student" name="attendance-student">
+          </div>
+          
+          <div class="form-group">
+            <label for="attendance-month"><i class="fas fa-calendar"></i> Select Month:</label>
+            <select id="attendance-month" name="attendance-month">
+              <option value="0">January</option>
+              <option value="1">February</option>
+              <option value="2">March</option>
+              <option value="3">April</option>
+              <option value="4">May</option>
+              <option value="5">June</option>
+              <option value="6">July</option>
+              <option value="7">August</option>
+              <option value="8">September</option>
+              <option value="9">October</option>
+              <option value="10">November</option>
+              <option value="11">December</option>
+            </select>
+          </div>
+        </div>
+        
+        <h3>Mark Attendance for <span id="current-month">May</span></h3>
+        <div class="attendance-grid" id="attendance-grid">
+          <!-- Generated by JavaScript -->
+        </div>
+        
+        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="markAllPresent()">
+            <i class="fas fa-check-circle"></i> Mark All Present
+          </button>
+          <button class="btn btn-primary" onclick="calculateAttendance()">
+            <i class="fas fa-calculator"></i> Calculate Attendance
+          </button>
+        </div>
+        
+        <div id="attendance-result" style="margin-top: 20px; padding: 20px; background: var(--light-gray); border-radius: var(--border-radius); display: none;">
+          <h3>Attendance Summary</h3>
+          <p>Total Days: <span id="total-days">0</span></p>
+          <p>Present: <span id="present-days">0</span></p>
+          <p>Absent: <span id="absent-days">0</span></p>
+          <p>Attendance Percentage: <span id="attendance-percentage">0%</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Tab -->
+    <div class="tab-content" id="comparison-tab">
+      <div class="evaluation-form">
+        <h2>Performance Comparison</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="compare-student"><i class="fas fa-user"></i> Student Name:</label>
+            <input type="text" id="compare-student" name="compare-student">
+          </div>
+          
+          <div class="form-group">
+            <label for="compare-semester"><i class="fas fa-compare"></i> Compare Semesters:</label>
+            <select id="compare-semester" name="compare-semester" multiple>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+            </select>
+            <small>Hold Ctrl to select multiple semesters</small>
+          </div>
+        </div>
+        
+        <button class="btn btn-primary" onclick="comparePerformance()">
+          <i class="fas fa-chart-bar"></i> Compare
+        </button>
+        
+        <div id="comparison-result" style="margin-top: 30px;">
+          <canvas id="comparisonChart" style="margin: 20px 0;"></canvas>
+          
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Semester 1</th>
+                <th>Semester 2</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mathematics</td>
+                <td>85%</td>
+                <td>78%</td>
+                <td><i class="fas fa-arrow-down" style="color: var(--warning);"></i></td>
+              </tr>
+              <tr>
+                <td>Science</td>
+                <td>72%</td>
+                <td>80%</td>
+                <td><i class="fas fa-arrow-up" style="color: var(--success);"></i></td>
+              </tr>
+              <tr>
+                <td>English</td>
+                <td>90%</td>
+                <td>92%</td>
+                <td><i class="fas fa-arrow-up" style="color: var(--success);"></i></td>
+              </tr>
+              <tr>
+                <td>History</td>
+                <td>68%</td>
+                <td>75%</td>
+                <td><i class="fas fa-arrow-up" style="color: var(--success);"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Tab -->
+    <div class="tab-content" id="history-tab">
+      <div class="evaluation-form">
+        <h2>Performance History</h2>
+        
+        <div class="form-group">
+          <label for="history-student"><i class="fas fa-user"></i> Student Name:</label>
+          <input type="text" id="history-student" name="history-student">
+        </div>
+        
+        <button class="btn btn-primary" onclick="loadHistory()">
+          <i class="fas fa-chart-line"></i> Load History
+        </button>
+        
+        <div id="history-result">
+          <canvas id="historyChart" style="margin-top: 30px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" id="themeButton">🌙</button>
+
+  <script>
+    // Theme toggle functionality
+    const themeButton = document.getElementById('themeButton');
+    
+    function toggleMode() {
+      document.body.classList.toggle('dark-mode');
+      
+      if (document.body.classList.contains('dark-mode')) {
+        themeButton.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeButton.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+    
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      themeButton.textContent = '☀️';
+    }
+    
+    themeButton.addEventListener('click', toggleMode);
+    
+    // Tab functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all buttons and contents
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        // Show corresponding content
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById(`${tabId}-tab`).classList.add('active');
+      });
+    });
+
+    // Initialize attendance grid
+    function initializeAttendanceGrid() {
+      const grid = document.getElementById('attendance-grid');
+      grid.innerHTML = '';
+      
+      const daysInMonth = 31; // Simplified for demo
+      
+      for (let i = 1; i <= daysInMonth; i++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'attendance-day';
+        dayElement.textContent = i;
+        dayElement.addEventListener('click', () => {
+          dayElement.classList.toggle('present');
+          if (!dayElement.classList.contains('present')) {
+            dayElement.classList.add('absent');
+          } else {
+            dayElement.classList.remove('absent');
+          }
+        });
+        
+        grid.appendChild(dayElement);
+      }
+    }
+
+    // Mark all days as present
+    function markAllPresent() {
+      const days = document.querySelectorAll('.attendance-day');
+      days.forEach(day => {
+        day.classList.add('present');
+        day.classList.remove('absent');
+      });
+    }
+
+    // Calculate attendance percentage
+    function calculateAttendance() {
+      const days = document.querySelectorAll('.attendance-day');
+      const totalDays = days.length;
+      let presentDays = 0;
+      
+      days.forEach(day => {
+        if (day.classList.contains('present')) {
+          presentDays++;
+        }
+      });
+      
+      const percentage = (presentDays / totalDays * 100).toFixed(2);
+      
+      document.getElementById('total-days').textContent = totalDays;
+      document.getElementById('present-days').textContent = presentDays;
+      document.getElementById('absent-days').textContent = totalDays - presentDays;
+      document.getElementById('attendance-percentage').textContent = `${percentage}%`;
+      
+      document.getElementById('attendance-result').style.display = 'block';
+    }
+
+    // Evaluate student performance
+    function evaluatePerformance() {
+      // Get form values
+      const name = document.getElementById('name').value;
+      const math = parseInt(document.getElementById('math').value);
+      const science = parseInt(document.getElementById('science').value);
+      const english = parseInt(document.getElementById('english').value);
+      const history = parseInt(document.getElementById('history').value);
+      
+      // Validate inputs
+      if (!name || isNaN(math) || isNaN(science) || isNaN(english) || isNaN(history)) {
+        alert('Please fill all fields with valid values');
+        return;
+      }
+      
+      // Calculate overall percentage
+      const total = math + science + english + history;
+      const percentage = (total / 4).toFixed(2);
+      
+      // Determine grade
+      let grade;
+      if (percentage >= 90) grade = 'A+';
+      else if (percentage >= 80) grade = 'A';
+      else if (percentage >= 70) grade = 'B';
+      else if (percentage >= 60) grade = 'C';
+      else if (percentage >= 50) grade = 'D';
+      else grade = 'F';
+      
+      // Determine rank (simulated)
+      const rank = Math.floor(Math.random() * 30) + 1;
+      
+      // Generate feedback
+      const strengths = [];
+      const improvements = [];
+      
+      if (math >= 80) strengths.push('Mathematics');
+      else if (math <= 50) improvements.push('Mathematics');
+      
+      if (science >= 80) strengths.push('Science');
+      else if (science <= 50) improvements.push('Science');
+      
+      if (english >= 80) strengths.push('English');
+      else if (english <= 50) improvements.push('English');
+      
+      if (history >= 80) strengths.push('History');
+      else if (history <= 50) improvements.push('History');
+      
+      // Update result card
+      document.getElementById('overall-percentage').textContent = `${percentage}%`;
+      document.getElementById('overall-grade').textContent = grade;
+      document.getElementById('student-rank').textContent = `#${rank} in class`;
+      
+      document.getElementById('strengths').textContent = strengths.length > 0 
+        ? `You excel in ${strengths.join(', ')}` 
+        : 'No significant strengths identified';
+        
+      document.getElementById('improvements').textContent = improvements.length > 0 
+        ? `Focus on improving ${improvements.join(', ')}` 
+        : 'Keep up the good work across all subjects';
+      
+      // Show result card with animation
+      const resultCard = document.getElementById('result');
+      resultCard.style.display = 'block';
+      resultCard.classList.add('pulse');
+      setTimeout(() => resultCard.classList.remove('pulse'), 1500);
+      
+      // Create charts
+      createSubjectChart([math, science, english, history]);
+      createGradeChart(percentage);
+    }
+
+    // Create subject performance chart
+    function createSubjectChart(scores) {
+      const ctx = document.getElementById('subjectChart').getContext('2d');
+      
+      if (window.subjectChartInstance) {
+        window.subjectChartInstance.destroy();
+      }
+      
+      window.subjectChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Mathematics', 'Science', 'English', 'History'],
+          datasets: [{
+            label: 'Scores',
+            data: scores,
+            backgroundColor: [
+              '#4361ee',
+              '#4cc9f0',
+              '#f72585',
+              '#7209b7'
+            ],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100
+            }
+          }
+        }
+      });
+    }
+
+    // Create grade distribution chart
+    function createGradeChart(percentage) {
+      const ctx = document.getElementById('gradeChart').getContext('2d');
+      
+      if (window.gradeChartInstance) {
+        window.gradeChartInstance.destroy();
+      }
+      
+      const remaining = 100 - percentage;
+      
+      window.gradeChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Achieved', 'Remaining'],
+          datasets: [{
+            data: [percentage, remaining],
+            backgroundColor: [
+              '#4361ee',
+              '#e9ecef'
+            ],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          cutout: '70%',
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    }
+
+    // Compare performance across semesters
+    function comparePerformance() {
+      // This would typically fetch data from an API
+      // For demo, we'll use mock data
+      const ctx = document.getElementById('comparisonChart').getContext('2d');
+      
+      if (window.comparisonChartInstance) {
+        window.comparisonChartInstance.destroy();
+      }
+      
+      window.comparisonChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Semester 1', 'Semester 2', 'Semester 3', 'Semester 4'],
+          datasets: [{
+            label: 'Mathematics',
+            data: [85, 78, 82, 88],
+            borderColor: '#4361ee',
+            tension: 0.1
+          }, {
+            label: 'Science',
+            data: [72, 80, 75, 83],
+            borderColor: '#4cc9f0',
+            tension: 0.1
+          }, {
+            label: 'English',
+            data: [90, 92, 88, 94],
+            borderColor: '#f72585',
+            tension: 0.1
+          }, {
+            label: 'History',
+            data: [68, 75, 80, 79],
+            borderColor: '#7209b7',
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: false,
+              min: 50,
+              max: 100
+            }
+          }
+        }
+      });
+    }
+
+    // Load performance history
+    function loadHistory() {
+      // This would typically fetch data from an API
+      // For demo, we'll use mock data
+      const ctx = document.getElementById('historyChart').getContext('2d');
+      
+      if (window.historyChartInstance) {
+        window.historyChartInstance.destroy();
+      }
+      
+      window.historyChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{
+            label: 'Mathematics',
+            data: [85, 78, 82, 88, 84, 90],
+            backgroundColor: '#4361ee'
+          }, {
+            label: 'Science',
+            data: [72, 80, 75, 83, 79, 85],
+            backgroundColor: '#4cc9f0'
+          }, {
+            label: 'English',
+            data: [90, 92, 88, 94, 91, 95],
+            backgroundColor: '#f72585'
+          }, {
+            label: 'History',
+            data: [68, 75, 80, 79, 82, 85],
+            backgroundColor: '#7209b7'
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: false,
+              min: 50,
+              max: 100
+            }
+          }
+        }
+      });
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeAttendanceGrid();
+      
+      // Set current month for attendance
+      const monthSelect = document.getElementById('attendance-month');
+      const currentMonth = new Date().getMonth();
+      monthSelect.value = currentMonth;
+      document.getElementById('current-month').textContent = monthSelect.options[currentMonth].text;
+      
+      monthSelect.addEventListener('change', function() {
+        document.getElementById('current-month').textContent = this.options[this.value].text;
+        initializeAttendanceGrid();
+      });
+    });
+  </script>
+</body>
+</html>

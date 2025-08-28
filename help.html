@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Center - Student Evaluation Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="help.css">
+</head>
+<body class="light-mode">
+
+  <!-- Navbar -->
+  <nav>
+    <div class="navbar">
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="evaluation.html">Evaluation</a></li>
+        <li><a href="lectures.html">Lecture Videos</a></li>
+        <li><a href="help.html" class="active">Help</a></li>
+        <li><a href="login.html" id="loginLink" class="disabled-link">Login</a></li>
+      </ul>
+    </div>
+  </nav>    
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="page-header">
+      <h1>Help & Support Center</h1>
+      <p>Get assistance, find answers to common questions, and learn how to make the most of SEMS</p>
+    </div>
+
+    <!-- AI Assistant -->
+    <section class="help-section">
+      <div class="ai-assistant">
+        <div class="ai-header">
+          <div class="ai-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h2 class="section-title" style="color: white; border-bottom: none;">SEMS Assistant</h2>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+          <div class="message ai-message">
+            Hi there! I'm your SEMS Assistant. How can I help you today? You can ask me about evaluations, lecture videos, or using the system.
+          </div>
+        </div>
+        
+        <div class="chat-input">
+          <input type="text" id="userInput" placeholder="Ask a question...">
+          <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i> Send</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="help-section">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      
+      <div class="faq-container">
+        <!-- FAQ Item 1 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            How do I evaluate a student's performance?
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>To evaluate a student, go to the Evaluation section, enter the student's name and scores for each subject, and click the "Evaluate" button. The system will generate a detailed performance report with insights.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ Item 2 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            Can I watch recorded lectures on SEMS?
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! The Lecture Videos section contains all recorded lectures organized by subject and semester. You can search for specific topics or browse by category.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ Item 3 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            How do I reset my password?
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Click on the "Forgot Password" link on the login page. Enter your email address, and we'll send you a password reset link. Check your spam folder if you don't see it in your inbox.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ Item 4 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            How can I track my academic progress?
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>The Evaluation section provides detailed analytics on your performance. You can view subject-wise scores, overall grades, and progress over time through interactive charts.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ Item 5 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            Are my personal details secure on SEMS?
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, we take data security seriously. All personal information is encrypted, and we comply with educational data protection regulations. Read our Privacy Policy for more details.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ Item 6 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            Can I download my evaluation reports?
+            <div class="faq-toggle"><i class="fas fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, in the Evaluation section, after generating a report, you'll see a "Download Report" button. You can save it as a PDF for your records.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Terms & Guidelines -->
+    <section class="help-section">
+      <h2 class="section-title">Terms & Guidelines</h2>
+      
+      <div class="terms-container">
+        <div class="terms-content">
+          <h3>Acceptable Use Policy</h3>
+          <p>By using SEMS, you agree to use the system for educational purposes only. You must not:</p>
+          <ul>
+            <li>Share your login credentials with others</li>
+            <li>Attempt to access other users' accounts or data</li>
+            <li>Use the system to distribute unauthorized content</li>
+            <li>Engage in any activity that disrupts the system's functionality</li>
+          </ul>
+          
+          <h3>Privacy Guidelines</h3>
+          <p>We are committed to protecting your privacy:</p>
+          <ul>
+            <li>Your personal data is used solely for educational purposes</li>
+            <li>We do not share your information with third parties without consent</li>
+            <li>You can request to view or delete your data at any time</li>
+            <li>All data is encrypted and stored securely</li>
+          </ul>
+          
+          <h3>System Guidelines</h3>
+          <p>To ensure optimal performance:</p>
+          <ul>
+            <li>Use a supported browser (Chrome, Firefox, Safari, or Edge)</li>
+            <li>Keep your browser updated to the latest version</li>
+            <li>Use a stable internet connection for video lectures</li>
+            <li>Clear your browser cache if you experience technical issues</li>
+          </ul>
+          
+          <h3>Content Policy</h3>
+          <p>All educational content provided through SEMS is:</p>
+          <ul>
+            <li>Copyrighted and for educational use only</li>
+            <li>Not to be redistributed without permission</li>
+            <li>Subject to updates and improvements without notice</li>
+          </ul>
+        </div>
+        
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="terms-agreement" name="terms-agreement">
+            <span>I have read and agree to the terms and guidelines</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section class="help-section">
+      <h2 class="section-title">Share Your Feedback</h2>
+      
+      <div class="feedback-form">
+        <div class="form-group">
+          <label for="feedback-type">Feedback Type</label>
+          <select id="feedback-type" name="feedback-type">
+            <option value="">Select feedback type</option>
+            <option value="suggestion">Suggestion</option>
+            <option value="bug">Bug Report</option>
+            <option value="complaint">Complaint</option>
+            <option value="praise">Praise</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="feedback-message">Your Feedback</label>
+          <textarea id="feedback-message" name="feedback-message" rows="4" placeholder="Please share your thoughts, suggestions, or issues..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="feedback-email">Email (optional, if you'd like a response)</label>
+          <input type="email" id="feedback-email" name="feedback-email" placeholder="Your email address">
+        </div>
+        
+        <button class="btn btn-primary" onclick="submitFeedback()">
+          <i class="fas fa-paper-plane"></i> Submit Feedback
+        </button>
+      </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="help-section">
+      <h2 class="section-title">Contact Support</h2>
+      
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3>Email Support</h3>
+          <p>support@sems.com</p>
+          <p>Typically responds within 24 hours</p>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <h3>Phone Support</h3>
+          <p>+1 (800) 123-4567</p>
+          <p>Mon-Fri, 9AM-5PM EST</p>
+        </div>
+        
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3>Live Chat</h3>
+          <p>Available during business hours</p>
+          <p>Look for the chat icon in the bottom right</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Mode Toggle Button -->
+  <button class="mode-toggle" onclick="toggleMode()">🌙</button>
+
+  <script src="help.js"></script>
+</body>
+</html>

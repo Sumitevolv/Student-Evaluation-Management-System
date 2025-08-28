@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Evaluation Management System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="home.css">
+</head>
+<body class="light-mode">
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h2>Login to SEMS</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="form-footer">
+          <p>Don't have an account? <a href="#" id="showSignup">Sign Up</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeSignupModal">&times;</span>
+      <h2>Create an Account</h2>
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="Create a password" required>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <div class="form-footer">
+          <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="container navbar">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>SEMS</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="evaluation.html" class="disabled-link">Evaluation</a></li>
+        <li><a href="lectures.html" class="disabled-link">Lecture Videos</a></li>
+        <li><a href="help.html" class="disabled-link">Help</a></li>
+        <li><a href="login.html" id="loginLink" class="disabled-link">Login</a></li>
+      </ul>
+      <div class="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to the Student Evaluation Management System</h1>
+      <p>Manage student evaluations, view lecture videos, and get help all in one place.</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Introduction Section -->
+    <section class="intro">
+      <h2>About SEMS</h2>
+      <p>The Student Evaluation Management System (SEMS) is designed to assist educators and institutions in efficiently evaluating student performance. The system provides tools to evaluate students' scores, provide feedback, and track their progress over time.</p>
+    </section>
+
+    <!-- Features Section -->
+    <section>
+      <h2>Key Features</h2>
+      <div class="features">
+        <div class="feature-card">
+          <i class="fas fa-chart-line"></i>
+          <h3>Evaluation</h3>
+          <p>Evaluate student performance in various subjects and view detailed reports with analytics.</p>
+          <a href="evaluation.html" class="feature-link disabled-link">Go to Evaluation</a>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-video"></i>
+          <h3>Lecture Videos</h3>
+          <p>Access recorded lecture videos to enhance learning and understanding of topics.</p>
+          <a href="lectures.html" class="feature-link disabled-link">Watch Lecture Videos</a>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-hands-helping"></i>
+          <h3>Help & Support</h3>
+          <p>Need assistance? Find answers to common questions and get support from our team.</p>
+          <a href="help.html" class="feature-link disabled-link">Get Help</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section>
+      <h2>System Statistics</h2>
+      <div class="features">
+        <div class="feature-card">
+          <i class="fas fa-users"></i>
+          <h3>5,000+</h3>
+          <p>Active Students</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-book"></i>
+          <h3>200+</h3>
+          <p>Courses Available</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-film"></i>
+          <h3>1,200+</h3>
+          <p>Lecture Videos</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section class="feedback">
+      <h2>Your Feedback</h2>
+      <p>Let us know how we can improve your experience with SEMS. Your feedback is valuable to us!</p>
+      <a href="feedback.html" class="btn btn-primary disabled-link">Submit Feedback</a>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-section">
+        <h3>About SEMS</h3>
+        <p>The Student Evaluation Management System helps educators and students track progress and improve learning outcomes.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="evaluation.html">Evaluation</a>
+        <a href="lectures.html">Lecture Videos</a>
+        <a href="help.html">Help & Support</a>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-envelope"></i> support@sems.com</p>
+        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2023 Student Evaluation Management System. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <button class="mode-toggle" onclick="toggleMode()">🌙</button>
+
+  <script src="home.js"></script>
+</body>
+</html>

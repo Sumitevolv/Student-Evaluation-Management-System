@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Login - SEMS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --success: #4cc9f0;
+      --warning: #f72585;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --card-bg: #ffffff;
+      --text-color: #212529;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    .dark-mode {
+      --primary: #4cc9f0;
+      --secondary: #4895ef;
+      --success: #3a0ca3;
+      --warning: #f72585;
+      --light: #121212;
+      --dark: #f8f9fa;
+      --gray: #adb5bd;
+      --light-gray: #2d2d2d;
+      --card-bg: #1e1e1e;
+      --text-color: #e9ecef;
+      --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: var(--transition);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar Styles */
+    nav {
+      background-color: var(--primary);
+      padding: 1rem 0;
+      box-shadow: var(--box-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo i {
+      margin-right: 0.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-left: 1.5rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 0.5rem 0.8rem;
+      border-radius: var(--border-radius);
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .login-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 2.5rem;
+      transition: var(--transition);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-right: 10px;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .login-header h1 {
+      font-size: 1.8rem;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .login-header p {
+      color: var(--gray);
+      font-size: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border: 2px solid var(--light-gray);
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      transition: var(--transition);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--gray);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(67, 97, 238, 0.4);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .form-footer p {
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .toggle-form {
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .toggle-form:hover {
+      text-decoration: underline;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      box-shadow: var(--box-shadow);
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      transform: rotate(30deg) scale(1.1);
+    }
+
+    .password-strength {
+      height: 5px;
+      border-radius: 5px;
+      margin-top: 0.5rem;
+      background-color: var(--light-gray);
+      overflow: hidden;
+    }
+
+    .strength-meter {
+      height: 100%;
+      width: 0%;
+      transition: var(--transition);
+    }
+
+    .weak {
+      background-color: #ff4d4f;
+      width: 33%;
+    }
+
+    .medium {
+      background-color: #faad14;
+      width: 66%;
+    }
+
+    .strong {
+      background-color: #52c41a;
+      width: 100%;
+    }
+
+    .password-rules {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 0.5rem;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      border-radius: var(--border-radius);
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      box-shadow: var(--box-shadow);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      border-left: 4px solid #52c41a;
+    }
+
+    .notification.error {
+      border-left: 4px solid #ff4d4f;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary);
+      color: white;
+      padding: 1.5rem 0;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 250px;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: white;
+    }
+
+    .footer-section p, .footer-section a {
+      margin-bottom: 0.5rem;
+      display: block;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+    }
+
+    .footer-section a:hover {
+      color: white;
+    }
+
+    .social-links a {
+      display: inline-block;
+      margin-right: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-card {
+      animation: fadeIn 0.5s ease;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 64px;
+        right: -100%;
+        background-color: var(--primary);
+        width: 250px;
+        height: calc(100vh - 64px);
+        flex-direction: column;
+        padding: 2rem;
+        transition: var(--transition);
+        box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links li {
+        margin: 1rem 0;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .login-card {
+        padding: 1.5rem;
+      }
+      
+      .logo-text {
+        font-size: 1.5rem;
+      }
+      
+      .login-header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .theme-toggle {
+        bottom: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+      }
+      
+      .navbar {
+        padding: 0 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="navbar">
+      <a href="index.html" class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>SEMS</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="evaluation.html">Evaluation</a></li>
+        <li><a href="lectures.html">Lecture Videos</a></li>
+        <li><a href="help.html">Help</a></li>
+        <li><a href="login.html" class="active">Login</a></li>
+      </ul>
+      <div class="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="login-logo">
+            <i class="fas fa-graduation-cap logo-icon"></i>
+            <div class="logo-text">SEMS</div>
+          </div>
+          <h1 id="form-title">Student Login</h1>
+          <p id="form-subtitle">Access your student dashboard</p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form">
+          <div class="form-group">
+            <label for="student-id">Student ID</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user input-icon"></i>
+              <input type="text" id="student-id" placeholder="Enter your student ID" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <div class="input-with-icon">
+              <i class="fas fa-lock input-icon"></i>
+              <input type="password" id="login-password" placeholder="Enter your password" required>
+              <i class="fas fa-eye password-toggle" id="login-password-toggle"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </button>
+
+          <div class="form-footer">
+            <p>Don't have an account? <span class="toggle-form" id="show-register">Register</span></p>
+            <p><span class="toggle-form" id="show-forgot">Forgot Password?</span></p>
+          </div>
+        </form>
+
+        <!-- Registration Form -->
+        <form id="register-form" style="display: none;">
+          <div class="form-group">
+            <label for="full-name">Full Name</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user input-icon"></i>
+              <input type="text" id="full-name" placeholder="Enter your full name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-with-icon">
+              <i class="fas fa-envelope input-icon"></i>
+              <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="new-student-id">Student ID</label>
+            <div class="input-with-icon">
+              <i class="fas fa-id-card input-icon"></i>
+              <input type="text" id="new-student-id" placeholder="Enter your student ID" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="new-password">Password</label>
+            <div class="input-with-icon">
+              <i class="fas fa-lock input-icon"></i>
+              <input type="password" id="new-password" placeholder="Create a password" required>
+              <i class="fas fa-eye password-toggle" id="register-password-toggle"></i>
+            </div>
+            <div class="password-strength">
+              <div class="strength-meter" id="password-strength-meter"></div>
+            </div>
+            <div class="password-rules">
+              Password must be at least 8 characters with uppercase, lowercase, number, and special character.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <div class="input-with-icon">
+              <i class="fas fa-lock input-icon"></i>
+              <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Register
+          </button>
+
+          <div class="form-footer">
+            <p>Already have an account? <span class="toggle-form" id="show-login">Login</span></p>
+          </div>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form id="forgot-form" style="display: none;">
+          <div class="form-group">
+            <label for="forgot-student-id">Student ID</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user input-icon"></i>
+              <input type="text" id="forgot-student-id" placeholder="Enter your student ID" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="forgot-email">Email Address</label>
+            <div class="input-with-icon">
+              <i class="fas fa-envelope input-icon"></i>
+              <input type="email" id="forgot-email" placeholder="Enter your registered email" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-key"></i> Reset Password
+          </button>
+
+          <div class="form-footer">
+            <p>Remember your password? <span class="toggle-form" id="show-login-from-forgot">Login</span></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>About SEMS</h3>
+        <p>The Student Evaluation Management System helps educators and students track progress and improve learning outcomes.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="evaluation.html">Evaluation</a>
+        <a href="lectures.html">Lecture Videos</a>
+        <a href="help.html">Help & Support</a>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-envelope"></i> support@sems.com</p>
+        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2023 Student Evaluation Management System. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <button class="theme-toggle" id="themeButton">🌙</button>
+
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle" id="notification-icon"></i>
+    <span id="notification-message"></span>
+  </div>
+
+  <script>
+    // DOM Elements
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const forgotForm = document.getElementById('forgot-form');
+    const formTitle = document.getElementById('form-title');
+    const formSubtitle = document.getElementById('form-subtitle');
+    const themeButton = document.getElementById('themeButton');
+    const notification = document.getElementById('notification');
+    const notificationIcon = document.getElementById('notification-icon');
+    const notificationMessage = document.getElementById('notification-message');
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    // Mobile menu toggle
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+    
+    // Password toggle functionality
+    function setupPasswordToggle(toggleId, inputId) {
+      const toggle = document.getElementById(toggleId);
+      const input = document.getElementById(inputId);
+      
+      toggle.addEventListener('click', () => {
+        if (input.type === 'password') {
+          input.type = 'text';
+          toggle.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+          input.type = 'password';
+          toggle.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+      });
+    }
+    
+    // Setup password toggles
+    setupPasswordToggle('login-password-toggle', 'login-password');
+    setupPasswordToggle('register-password-toggle', 'new-password');
+    
+    // Form toggling functionality
+    document.getElementById('show-register').addEventListener('click', () => {
+      loginForm.style.display = 'none';
+      registerForm.style.display = 'block';
+      forgotForm.style.display = 'none';
+      formTitle.textContent = 'Student Registration';
+      formSubtitle.textContent = 'Create your student account';
+    });
+    
+    document.getElementById('show-login').addEventListener('click', () => {
+      loginForm.style.display = 'block';
+      registerForm.style.display = 'none';
+      forgotForm.style.display = 'none';
+      formTitle.textContent = 'Student Login';
+      formSubtitle.textContent = 'Access your student dashboard';
+    });
+    
+    document.getElementById('show-forgot').addEventListener('click', () => {
+      loginForm.style.display = 'none';
+      registerForm.style.display = 'none';
+      forgotForm.style.display = 'block';
+      formTitle.textContent = 'Reset Password';
+      formSubtitle.textContent = 'Recover your account access';
+    });
+    
+    document.getElementById('show-login-from-forgot').addEventListener('click', () => {
+      loginForm.style.display = 'block';
+      registerForm.style.display = 'none';
+      forgotForm.style.display = 'none';
+      formTitle.textContent = 'Student Login';
+      formSubtitle.textContent = 'Access your student dashboard';
+    });
+    
+    // Password strength meter
+    const passwordInput = document.getElementById('new-password');
+    const strengthMeter = document.getElementById('password-strength-meter');
+    
+    passwordInput.addEventListener('input', () => {
+      const password = passwordInput.value;
+      let strength = 0;
+      
+      // Check password length
+      if (password.length >= 8) strength += 1;
+      
+      // Check for uppercase letters
+      if (password.match(/[A-Z]/)) strength += 1;
+      
+      // Check for lowercase letters
+      if (password.match(/[a-z]/)) strength += 1;
+      
+      // Check for numbers
+      if (password.match(/[0-9]/)) strength += 1;
+      
+      // Check for special characters
+      if (password.match(/[^A-Za-z0-9]/)) strength += 1;
+      
+      // Update strength meter
+      strengthMeter.className = 'strength-meter';
+      if (password.length === 0) {
+        strengthMeter.style.width = '0%';
+      } else if (strength <= 2) {
+        strengthMeter.classList.add('weak');
+      } else if (strength <= 4) {
+        strengthMeter.classList.add('medium');
+      } else {
+        strengthMeter.classList.add('strong');
+      }
+    });
+    
+    // Show notification
+    function showNotification(message, isSuccess = true) {
+      notification.className = 'notification' + (isSuccess ? ' success' : ' error');
+      notificationIcon.className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+      notificationMessage.textContent = message;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Form validation and submission
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const studentId = document.getElementById('student-id').value;
+      const password = document.getElementById('login-password').value;
+      
+      // Check if user exists in localStorage
+      const users = JSON.parse(localStorage.getItem('semsUsers')) || {};
+      
+      if (users[studentId] && users[studentId].password === password) {
+        showNotification('Login successful! Redirecting...', true);
+        // In a real application, you would redirect to the dashboard
+        setTimeout(() => {
+          alert(`Welcome back, ${users[studentId].name}! Login successful.`);
+        }, 1000);
+      } else {
+        showNotification('Invalid Student ID or password', false);
+      }
+    });
+    
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('full-name').value;
+      const email = document.getElementById('email').value;
+      const studentId = document.getElementById('new-student-id').value;
+      const password = document.getElementById('new-password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      
+      // Validate password match
+      if (password !== confirmPassword) {
+        showNotification('Passwords do not match', false);
+        return;
+      }
+      
+      // Validate password strength
+      if (password.length < 8 || 
+          !password.match(/[A-Z]/) || 
+          !password.match(/[a-z]/) || 
+          !password.match(/[0-9]/) || 
+          !password.match(/[^A-Za-z0-9]/)) {
+        showNotification('Password does not meet requirements', false);
+        return;
+      }
+      
+      // Save user to localStorage (simulating database)
+      const users = JSON.parse(localStorage.getItem('semsUsers')) || {};
+      
+      if (users[studentId]) {
+        showNotification('Student ID already registered', false);
+        return;
+      }
+      
+      users[studentId] = {
+        name,
+        email,
+        password,
+        studentId
+      };
+      
+      localStorage.setItem('semsUsers', JSON.stringify(users));
+      showNotification('Registration successful! You can now login.', true);
+      
+      // Switch to login form
+      loginForm.style.display = 'block';
+      registerForm.style.display = 'none';
+      formTitle.textContent = 'Student Login';
+      formSubtitle.textContent = 'Access your student dashboard';
+    });
+    
+    forgotForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const studentId = document.getElementById('forgot-student-id').value;
+      const email = document.getElementById('forgot-email').value;
+      
+      // Check if user exists
+      const users = JSON.parse(localStorage.getItem('semsUsers')) || {};
+      
+      if (users[studentId] && users[studentId].email === email) {
+        showNotification('Password reset instructions sent to your email', true);
+      } else {
+        showNotification('No account found with provided details', false);
+      }
+    });
+    
+    // Theme toggle functionality
+    themeButton.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      
+      if (document.body.classList.contains('dark-mode')) {
+        themeButton.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeButton.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+    
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      themeButton.textContent = '☀️';
+    }
+    
+    // Check if there are any registered users (for demo purposes)
+    window.addEventListener('load', () => {
+      const users = JSON.parse(localStorage.getItem('semsUsers')) || {};
+      if (Object.keys(users).length === 0) {
+        // Add a demo user for testing
+        users['S12345'] = {
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+          password: 'Password123!',
+          studentId: 'S12345'
+        };
+        localStorage.setItem('semsUsers', JSON.stringify(users));
+      }
+    });
+  </script>
+</body>
+</html>
